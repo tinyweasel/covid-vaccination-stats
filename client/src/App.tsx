@@ -41,7 +41,7 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <p>Total Vaccinations: {this.state.response}</p>
+          <p><strong>Total Vaccinations:</strong> {this.state.response}</p>
           <img src={logo} className="App-logo" alt="logo" />
           {/* <form onSubmit={this.handleSubmit}>
           <p>
