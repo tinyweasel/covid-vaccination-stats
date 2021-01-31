@@ -9,6 +9,10 @@ class App extends Component {
     responseToPost: '',
   };
 
+  irelandPopulation = 5000000;
+  totalVaccinations = this.state.response;
+  percentageOfPopulation = parseInt(this.totalVaccinations) / this.irelandPopulation;
+
   componentDidMount() {
     this.callApi()
       .then(res => this.setState({ response: res.total_vaccinations }))
@@ -41,11 +45,13 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <p><strong>Total Vaccinations:</strong> {this.state.response}</p>
+        <p><strong>Total Vaccinations:</strong> {this.totalVaccinations.toLocaleString()}</p>
+        <p><strong>Percentage of Population Vaccinated:</strong> {`${this.percentageOfPopulation}%`}</p>
           <img src={logo} className="App-logo" alt="logo" />
           {/* <form onSubmit={this.handleSubmit}>
           <p>
-            <strong>Post to Server:</strong>
+            <strong>Post to Server:</strong>        <p><strong>Total Vaccinations:</strong> {this.state.response.toLocaleString()}</p>
+
           </p>
           <input
             type="text"
