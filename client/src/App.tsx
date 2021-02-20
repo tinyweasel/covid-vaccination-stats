@@ -2,20 +2,28 @@ import React, { Component } from 'react';
 import logo from './assets/corona.png';
 import './App.css';
 
+const findPercentageOfPopulation = (vaccinations: number) => {
+  return (vaccinations / 5000000 * 100).toFixed(2); // Irish population is around five million
+}
+
 class App extends Component {
   state = {
     response: '',
     post: '',
     responseToPost: '',
+    totalVaccinations: 0,
+    percentageOfPopulation: 0
   };
 
-  irelandPopulation = 5000000;
-  totalVaccinations = this.state.response;
-  percentageOfPopulation = parseInt(this.totalVaccinations) / this.irelandPopulation;
+
 
   componentDidMount() {
     this.callApi()
-      .then(res => this.setState({ response: res.total_vaccinations }))
+      .then(res => {
+        this.setState({ response: res.total_vaccinations })
+        this.setState({ totalVaccinations: parseInt(this.state.response) });
+        this.setState({ percentageOfPopulation: findPercentageOfPopulation(this.state.totalVaccinations) });
+      })
       .catch(err => console.log(err));
   }
 
@@ -45,8 +53,8 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-        <p><strong>Total Vaccinations:</strong> {this.totalVaccinations.toLocaleString()}</p>
-        <p><strong>Percentage of Population Vaccinated:</strong> {`${this.percentageOfPopulation}%`}</p>
+        <p><strong>Total Vaccinations:</strong> {this.state.response.toLocaleString()}</p>
+        <p><strong>Percentage of Population Vaccinated:</strong> {`${this.state.percentageOfPopulation}%`}</p>
           <img src={logo} className="App-logo" alt="logo" />
           {/* <form onSubmit={this.handleSubmit}>
           <p>
