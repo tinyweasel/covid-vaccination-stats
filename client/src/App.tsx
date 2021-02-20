@@ -9,6 +9,10 @@ class App extends Component {
     responseToPost: '',
   };
 
+  irelandPopulation = 5000000;
+  totalVaccinations = this.state.response;
+  percentageOfPopulation = parseInt(this.totalVaccinations) / this.irelandPopulation;
+
   componentDidMount() {
     this.callApi()
       .then(res => this.setState({ response: res.total_vaccinations }))
