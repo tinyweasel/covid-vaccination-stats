@@ -20,7 +20,7 @@ class App extends Component {
   componentDidMount() {
     this.callApi()
       .then(res => {
-        this.setState({ response: res.total_vaccinations })
+        this.setState({ response: res.people_vaccinated })
         this.setState({ totalVaccinations: parseInt(this.state.response) });
         this.setState({ percentageOfPopulation: findPercentageOfPopulation(this.state.totalVaccinations) });
       })
