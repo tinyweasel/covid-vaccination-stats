@@ -1,0 +1,8 @@
+# Node modules
+/node_modules
+
+# React build folder
+/build
+
+# create-react-app
+/src/serviceWorker.ts
