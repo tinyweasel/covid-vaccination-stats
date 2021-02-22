@@ -1,26 +1,31 @@
-const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');
+const express = require('express');
+const path = require('path');
 
 const { getCovidData } = require('./get-vaccination-data')
+const db = require('./database');
+const router = require('./routes/router')
 
 const app = express();
-const path = require('path');
 const port = process.env.PORT || 5000;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
 
-app.get('/api/country-data', async (req, res) => {
+db.on('error', console.error.bind(console, 'MongoDB connection error:'))
+
+app.get('/', (req, res) => {
+  res.send('Fuck germs!');
+})
+
+app.get('/api/ireland-data', async (req, res) => {
   const irelandData = await getCovidData();
   res.send(irelandData);
 });
 
-app.post('/api/country-data', (req, res) => {
-  console.log(req.body);
-  res.send(
-    `Country entered: ${req.body.post}`,
-  );
-});
+app.use('/api', router)
 
 if (process.env.NODE_ENV === 'production') {
   // Serve any static files

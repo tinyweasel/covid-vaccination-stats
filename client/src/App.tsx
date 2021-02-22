@@ -10,14 +10,14 @@ const findPercentageOfPopulation = (vaccinations: number) => {
 class App extends Component {
   state = {
     response: [],
-    post: '',
-    responseToPost: '',
+    get: '',
+    responseToGet: '',
     totalVaccinations: 0,
     percentageOfPopulation: 0,
   };
 
   callApi = async (): Promise<CountryData> => {
-    const response: Response = await fetch('/api/country-data');
+    const response: Response = await fetch('/api/ireland-data');
     const body = await response.json();
     if (response.status !== 200) throw Error(body.message);
 
@@ -36,16 +36,15 @@ class App extends Component {
 
   handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault();
-    const response = await fetch('/api/country-data', {
-      method: 'POST',
+    const response = await fetch(`/api/country-data/${this.state.get}`, {
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ post: this.state.post }),
     });
-    const body = await response.text();
+    const body = await response.json();
 
-    this.setState({ responseToPost: body });
+    this.setState({ responseToGet: body.error });
   };
 
   render(): React.ReactNode {
@@ -55,18 +54,18 @@ class App extends Component {
         <p><strong>Total Vaccinations:</strong> {this.state.totalVaccinations.toLocaleString()}</p>
         <p><strong>Percentage Vaccinated:</strong> {`${this.state.percentageOfPopulation}%`}</p>
           <img src={logo} className="App-logo" alt="logo" />
-          <form onSubmit={this.handleSubmit} hidden>
+          <form onSubmit={this.handleSubmit}>
           <p>
             <strong>Choose a Country:</strong>
           </p>
           <input
             type="text"
-            value={this.state.post}
-            onChange={e => this.setState({ post: e.target.value })}
+            value={this.state.get}
+            onChange={e => this.setState({ get: e.target.value })}
           />
           <button type="submit">Submit</button>
         </form>
-        <p>{this.state.responseToPost}</p>
+        <p>{this.state.responseToGet}</p>
         </header>
       </div>
     );
