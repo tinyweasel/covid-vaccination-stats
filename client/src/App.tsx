@@ -54,7 +54,7 @@ class App extends Component {
         <p><strong>Total Vaccinations:</strong> {this.state.totalVaccinations.toLocaleString()}</p>
         <p><strong>Percentage Vaccinated:</strong> {`${this.state.percentageOfPopulation}%`}</p>
           <img src={logo} className="App-logo" alt="logo" />
-          <form onSubmit={this.handleSubmit}>
+          <form onSubmit={this.handleSubmit} hidden>
           <p>
             <strong>Choose a Country:</strong>
           </p>
