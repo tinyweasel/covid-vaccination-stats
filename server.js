@@ -16,9 +16,9 @@ app.use(cors());
 
 db.on('error', console.error.bind(console, 'MongoDB connection error:'))
 
-app.get('/', (req, res) => {
-  res.send('Fuck germs!');
-})
+// app.get('/', (req, res) => {
+//   res.send('Fuck germs!');
+// })
 
 app.get('/api/ireland-data', async (req, res) => {
   const irelandData = await getCovidData();
